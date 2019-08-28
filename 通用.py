@@ -26,7 +26,7 @@ class GetData:
         else:
             return input()
 
-    def get_rows(self, rows, data_type=int, split=' '):
+    def get_rows(self, rows=1, data_type=int, split=' '):
         data = []
         for i in range(rows):
             row_data = self._get_one_row().strip()
