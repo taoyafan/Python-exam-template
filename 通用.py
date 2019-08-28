@@ -2,7 +2,7 @@
 # 陕西科技大学 陶亚凡
 
 
-def _test_case_init():
+def test_cases():
     cases = '''
         This is test cases
         '''.split('\n')
@@ -16,7 +16,7 @@ class GetData:
     def __init__(self, use_test_case=True):
         self._use_test_case = use_test_case
         if self._use_test_case:
-            self._test_case = _test_case_init()
+            self._test_case = test_cases()
             self._least = len(self._test_case)
 
     def _get_one_row(self):
