@@ -1,6 +1,6 @@
 # 笔试题通用模板
 # 陕西科技大学 陶亚凡
-
+import time
 
 def test_cases():
     cases = '''
@@ -27,6 +27,9 @@ class GetData:
             return input()
 
     def get_rows(self, rows=1, data_type=int, split=' '):
+        if rows < 1:
+            return []
+
         data = []
         for i in range(rows):
             row_data = self._get_one_row().strip()
@@ -71,10 +74,12 @@ def main():
     logger = Logging(False)
     while True:
         logger.debug('-' * 50)
+        start_time = time.time()
         sol = Solution(logger)
         test = data.get_rows(1, str, None)
 
         print(sol.test(test))
+        logger.debug(['Consumed time'], [time.time() - start_time])
 
         if data.least == 0:
             break
