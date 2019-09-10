@@ -2,9 +2,18 @@
 # 陕西科技大学 陶亚凡
 import time
 
-def test_cases():
+
+def cases_for_test():
     cases = '''
-        This is test cases
+        5
+        33956 27538
+        79731 91415
+        25288 33956
+        33956 84925
+        79731 25288
+        
+        1
+        5 6
         '''.split('\n')
 
     cases = list(map(lambda x: x.strip(), cases))
@@ -16,7 +25,7 @@ class GetData:
     def __init__(self, use_test_case=True):
         self._use_test_case = use_test_case
         if self._use_test_case:
-            self._test_case = test_cases()
+            self._test_case = cases_for_test()
             self._least = len(self._test_case)
 
     def _get_one_row(self):
@@ -26,9 +35,9 @@ class GetData:
         else:
             return input()
 
-    def get_rows(self, rows=1, data_type=int, split=' '):
-        if rows < 1:
-            return []
+    # 注意返回的一定是一个 list，若只有一个数据记得 get_rows()[0]
+    def get_rows(self, rows=1, data_type=int, split=' ', is_2dim=False):
+        assert rows == 1 or (rows > 1 and is_2dim is True), "If rows>1, is_2dim must be True. Or rows can be 1"
 
         data = []
         for i in range(rows):
@@ -37,7 +46,7 @@ class GetData:
             new_data = list(map(data_type, row_data))
             data.append(new_data)
 
-        return data if len(data) > 1 else data[0]
+        return data if is_2dim else data[0]
 
     @property
     def least(self):
@@ -65,20 +74,21 @@ class Solution:
     def __init__(self, logger=Logging(False)):
         self._logger = logger
 
-    def test(self, test):
-        return test
+    def sol(self, data):
+        return data
 
 
 def main():
     data = GetData(use_test_case=True)
-    logger = Logging(False)
+    logger = Logging(True)
     while True:
         logger.debug('-' * 50)
         start_time = time.time()
         sol = Solution(logger)
-        test = data.get_rows(1, str, None)
+        nums = data.get_rows()[0]
+        all_data = data.get_rows(nums, is_2dim=True)
 
-        print(sol.test(test))
+        print(sol.sol(all_data))
         logger.debug(['Consumed time'], [time.time() - start_time])
 
         if data.least == 0:
